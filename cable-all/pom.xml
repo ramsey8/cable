@@ -11,6 +11,17 @@
 
     <artifactId>cable-all</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.cyj</groupId>
+            <artifactId>cable-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cyj</groupId>
+            <artifactId>cable-user</artifactId>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
             <id>nexus</id>

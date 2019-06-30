@@ -9,18 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cable-user</artifactId>
+    <artifactId>cable-common</artifactId>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cyj</groupId>
-            <artifactId>cable-common</artifactId>
-        </dependency>
-    </dependencies>
 </project>
