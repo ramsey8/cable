@@ -15,7 +15,7 @@ public class TestController {
 
     @RequiresPermissions("article:list")
     @GetMapping("/a")
-    @ApiOperation(httpMethod = "POST", value="测试api")
+    @ApiOperation(httpMethod = "GET", value="测试api")
     public ResponseData test() {
         return ResponseData.ok();
     }
