@@ -36,6 +36,7 @@ public class DataSourceConfig {
     private static int maxActive;
 
     private static int maxWait;
+    private static String validationQuery;
 
     /**
      * 注册DruidServlet
@@ -90,6 +91,7 @@ public class DataSourceConfig {
         druidDataSource.setMaxWait(maxWait);
         druidDataSource.setUseGlobalDataSourceStat(true);
         druidDataSource.setDriverClassName(driverClassName);
+        druidDataSource.setValidationQuery(validationQuery);
         return druidDataSource;
     }
 
@@ -131,6 +133,11 @@ public class DataSourceConfig {
     @Value(value = "${spring.datasource.maxWait}")
     public void setMaxWait(int maxWait) {
         DataSourceConfig.maxWait = maxWait;
+    }
+
+    @Value(value = "${spring.datasource.validationQuery}")
+    public void setMaxWait(String validationQuery) {
+        DataSourceConfig.validationQuery = validationQuery;
     }
 
 }
