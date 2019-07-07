@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Value("${swagger.address}")
+    @Value("${swagger.address:}")
     private String swaggerAddress;
 
     @Bean
@@ -43,7 +43,7 @@ public class SwaggerConfig {
                 .title("Boot测试")
                 .description("接口文档")
                 .version("V_1.0")
-                .licenseUrl(swaggerAddress)
+//                .licenseUrl(swaggerAddress)
                 .build();
     }
 

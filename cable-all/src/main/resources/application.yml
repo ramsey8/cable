@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.98.114.21:3306/anbot?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
-    username: mysql
-    password: root
+    url: jdbc:mysql://10.129.12.55:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5
