@@ -6,10 +6,10 @@
     <resultMap id="baseMap" type="cn.cyf.user.entity.UserInfo">
         <id column="userId" property="id"/>
         <result column="nickname" property="nickname"/>
-        <collection property="roleInfoList" ofType="cn.cyf.user.entity.RoleInfo" columnPrefix="role_">
+        <association property="roleInfo" columnPrefix="role_" javaType="cn.cyf.user.entity.RoleInfo">
             <id column="id" property="id"/>
             <result column="name" property="roleName"/>
-        </collection>
+        </association>
         <collection property="menuList" ofType="string">
             <id column="menuCode" property="menuCode"/>
         </collection>

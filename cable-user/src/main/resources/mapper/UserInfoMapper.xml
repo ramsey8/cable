@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cyf.user.mapper.UserMapper">
+
+    <resultMap id="baseMapper" type="cn.cyf.user.result.UserInfoResult">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="deleteStatus" property="deleteStatus"/>
+        <result column="is_lock" property="isLock"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <association columnPrefix="role_" javaType="cn.cyf.user.entity.RoleInfo" property="roleInfo">
+            <id property="id" column="id"/>
+            <result column="name" property="roleName"/>
+        </association>
+
+    </resultMap>
+    <select id="selectUserListPage" resultMap="baseMapper">
+        SELECT
+        u.id,
+        u.username,
+        u.nickname,
+        u.create_time createTime,
+        u.update_time updateTime,
+        u.delete_status deleteStatus,
+        u.is_lock,
+        u.phone,
+        u.email,
+        u.last_login_time,
+        l.role_name,
+        l.id role_id
+
+        FROM
+        sys_user u
+        LEFT JOIN sys_role l ON u.role_id = l.id
+        WHERE 1=1
+        <if test="user.nickname != null">
+            and u.nickname like "%"#{user.nickname}"%"
+        </if>
+        <if test="user.deleteStatus != null">
+            and u.delete_status = #{user.deleteStatus, jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <!--<update id="updateUser" parameterType="cn.cyf.user.form.UserInfoUpdateForm">-->
+        <!--update sys_user-->
+        <!--<trim suffixOverrides="," prefix="set">-->
+            <!--<if test="deleteStatus != null">-->
+                <!--delete_status = #{deleteStatus,jdbcType=TINYINT},-->
+            <!--</if>-->
+            <!--<if test="deleteStatus != null">-->
+                <!--delete_status = #{deleteStatus,jdbcType=TINYINT},-->
+            <!--</if>-->
+            <!--<if test="deleteStatus != null">-->
+                <!--delete_status = #{deleteStatus,jdbcType=TINYINT},-->
+            <!--</if>-->
+        <!--</trim>-->
+    <!--</update>-->
+</mapper>

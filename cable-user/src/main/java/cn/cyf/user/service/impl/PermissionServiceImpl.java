@@ -25,15 +25,13 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMap, Permission
      */
     private UserInfo getUserPermissionFromDB(String username) {
         UserInfo userPermission = baseMapper.getUserPermission(username);
-        userPermission.getRoleInfoList().forEach((u) -> {
-            if ("管理员".equals(u.getRoleName())) {
-                //查询所有菜单  所有权限
-                List<String> menuList = baseMapper.getAllMenu();
-                List<String> permissionList = baseMapper.getAllPermission();
-                userPermission.setMenuList(menuList);
-                userPermission.setPermissionList(permissionList);
-            }
-        });
+        if ("管理员".equals(userPermission.getRoleInfo().getRoleName())) {
+            //查询所有菜单  所有权限
+            List<String> menuList = baseMapper.getAllMenu();
+            List<String> permissionList = baseMapper.getAllPermission();
+            userPermission.setMenuList(menuList);
+            userPermission.setPermissionList(permissionList);
+        }
         return userPermission;
     }
 }

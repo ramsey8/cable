@@ -1,12 +1,12 @@
-package cn.cyf.user.entity;
+package cn.cyf.user.result;
 
 import cn.cyf.common.json.LongToDateSerialize;
+import cn.cyf.user.entity.RoleInfo;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,33 +18,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@TableName("sys_user")
-public class UserInfo implements Serializable {
+public class UserInfoResult implements Serializable {
 
-    private static final long serialVersionUID = -1489801037735850087L;
-    @TableId(type = IdType.UUID)
+    private static final long serialVersionUID = 5125312971054480355L;
     private String id;
     private String username;
     private String password;
     private String nickname;
-    @TableField("is_lock")
-    private Integer isLock;
-    @TableField("delete_status")
+//    private Integer isLock;
     private Integer deleteStatus;
-    @TableField("create_time")
     @JSONField(serializeUsing = LongToDateSerialize.class)
     private Date createTime;
 
     @JSONField(serializeUsing = LongToDateSerialize.class)
-    @TableField("update_time")
     private Date updateTime;
-    @TableField("role_id")
-    private String roleId;
-    @TableField("last_login_time")
+
+    private Integer isLock;
+
+    private RoleInfo roleInfo;
+    private List<String> menuList;
+    private List<String> permissionList;
+    @JSONField(serializeUsing = LongToDateSerialize.class)
     private Date lastLoginTime;
     private String phone;
     private String email;
-    private transient RoleInfo roleInfo;
-    private transient List<String> menuList;
-    private transient List<String> permissionList;
+
 }
