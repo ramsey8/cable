@@ -2,6 +2,7 @@ package cn.cyf.user.mapper;
 
 import cn.cyf.user.entity.PermissionInfo;
 import cn.cyf.user.entity.UserInfo;
+import cn.cyf.user.result.PermissionInfoResult;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface PermissionMap extends BaseMapper<PermissionInfo> {
      * 查询所有的权限
      */
     List<String> getAllPermission();
+
+    List<PermissionInfoResult> listAllPermission();
 }

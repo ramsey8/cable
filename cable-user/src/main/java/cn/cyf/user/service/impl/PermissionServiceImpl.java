@@ -3,6 +3,7 @@ package cn.cyf.user.service.impl;
 import cn.cyf.user.entity.PermissionInfo;
 import cn.cyf.user.entity.UserInfo;
 import cn.cyf.user.mapper.PermissionMap;
+import cn.cyf.user.result.PermissionInfoResult;
 import cn.cyf.user.service.PermissionService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,10 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMap, Permission
             userPermission.setPermissionList(permissionList);
         }
         return userPermission;
+    }
+
+    @Override
+    public List<PermissionInfoResult> listAllPermission() {
+        return this.baseMapper.listAllPermission();
     }
 }

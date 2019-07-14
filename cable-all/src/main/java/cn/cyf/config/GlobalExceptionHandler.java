@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseData exception(Exception ex) {
-        logger.error("铺货异常信息,", ex);
+        logger.error("捕获异常信息,", ex);
         return ResponseData.builder().code(ErrorCodeEnum.C00000003.getCode())
                 .message(ErrorCodeEnum.C00000003.getMessage())
                 .data(ex.getMessage())

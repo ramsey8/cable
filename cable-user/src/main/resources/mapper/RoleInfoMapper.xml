@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cyf.user.mapper.RoleInfoMapper">
+
+    <resultMap id="baseMapper" type="cn.cyf.user.result.RoleInfoResult">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+
+        <collection property="menus" ofType="cn.cyf.user.result.PermissionInfoResult">
+            <result column="menu_code" property="menuCode"/>
+            <result column="menu_name" property="menuName"/>
+            <collection ofType="cn.cyf.user.result.PermissionInfoResult" property="permissions">
+                <id column="permission_id" property="id"/>
+                <result column="permission_name" property="permissionName"/>
+                <result column="permission_code" property="permissionCode"/>
+            </collection>
+        </collection>
+
+    </resultMap>
+    <select id="selectRoleList" resultMap="baseMapper">
+        SELECT
+            t.id,
+            t.role_name,
+            t.create_time,
+            t.update_time,
+            t2.menu_code,
+            t2.menu_name,
+            t2.permission_name,
+            t2.permission_code,
+            t2.id permission_id
+        FROM
+            sys_role t
+            LEFT JOIN sys_role_permission t1 ON t.id = t1.role_id
+            LEFT JOIN sys_permission t2 ON t1.permission_id = t2.id
+        where t.delete_status = 1 and (t1.delete_status = 1 or t1.id is null)
+    </select>
+
+    <update id="deleteOldRolePermRelations" parameterType="cn.cyf.user.form.RoleInfoUpdateForm">
+        update sys_role_permission set delete_status = 0, update_time = #{updateTime,jdbcType=TIMESTAMP} where role_id = #{roleId}
+    </update>
+
+    <insert id="batchSaveRolePermissionRelations">
+        insert into sys_role_permission(id, role_id, permission_id, create_time, update_time, delete_status)
+                <foreach collection="list" item="item" separator=" union all ">
+                    select  REPLACE(uuid(),'-',''),
+                    #{item.roleId,jdbcType=VARCHAR},
+                    #{item.permissionId,jdbcType=VARCHAR},
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                    #{item.updateTime,jdbcType=TIMESTAMP},
+                    #{item.deleteStatus,jdbcType=TINYINT}
+                    from dual
+                </foreach>
+    </insert>
+
+    <update id="deleteRoles">
+        update sys_role set delete_status = 0, update_time = #{updateTime, jdbcType=TIMESTAMP} where
+        <foreach collection="ids" item="item" open=" id in (" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="deleteMultiOldRolePermRelations">
+        update sys_role_permission set delete_status = 0, update_time = #{updateTime,jdbcType=TIMESTAMP} where
+        <foreach collection="ids" item="item" open=" role_id in (" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

@@ -17,6 +17,13 @@
             <id column="permissionCode" property="permissionCode"/>
         </collection>
     </resultMap>
+    <resultMap id="permissionMap" type="cn.cyf.user.result.PermissionInfoResult">
+        <id column="menuName" property="menuName"/>
+        <collection property="permissions" ofType="cn.cyf.user.result.PermissionInfoResult">
+            <id column="id" property="id"/>
+            <result column="permissionName" property="permissionName"/>
+        </collection>
+    </resultMap>
 
    <select id="getUserPermission" resultMap="baseMap" parameterType="string">
        SELECT
@@ -44,4 +51,14 @@
         FROM sys_permission p
         ORDER BY p.id
     </select>
+
+    <select id="listAllPermission" resultMap="permissionMap">
+        SELECT
+            p.id                  id,
+            p.menu_name           menuName,
+            p.permission_name     permissionName,
+            p.required_permission requiredPerm
+        FROM sys_permission p
+    </select>
+
 </mapper>

@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -49,6 +50,8 @@ public class LoginServiceImpl extends ServiceImpl<UserMapper, UserInfo> implemen
             userInfo.setLastLoginTime(new Date());
             userInfoService.updateById(userInfo);
             return ResponseData.ok();
+        } catch (LockedAccountException ex) {
+            return ResponseData.fail(ErrorCodeEnum.C00000006);
         } catch (AuthenticationException ex) {
             return ResponseData.fail(ErrorCodeEnum.C00000004);
         }
@@ -58,10 +61,9 @@ public class LoginServiceImpl extends ServiceImpl<UserMapper, UserInfo> implemen
      * 根据用户名和密码查询对应的用户
      */
     @Override
-    public UserInfo getUser(String username, String password) {
+    public UserInfo getUser(String username) {
         Map<String, Object> queryMap = Maps.newHashMap();
         queryMap.put("username", username);
-        queryMap.put("password", password);
         List<UserInfo> userInfos = baseMapper.selectByMap(queryMap);
         if (CollectionUtils.isEmpty(userInfos)) {
             return null;

@@ -6,7 +6,7 @@ import cn.cyf.user.form.LoginForm;
 import com.baomidou.mybatisplus.service.IService;
 
 public interface LoginService extends IService<UserInfo> {
-    UserInfo getUser(String loginName, String password);
+    UserInfo getUser(String loginName);
 
     ResponseData authLogin(LoginForm form);
 
